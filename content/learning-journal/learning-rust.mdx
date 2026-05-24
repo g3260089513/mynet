@@ -1,0 +1,35 @@
+---
+title: "学习 Rust：从零到 CLI 工具"
+tool: "Rust"
+category: "language"
+difficulty: "advanced"
+timeSpent: "4 周"
+coverImage: "/images/learning-journal/rust/cover.jpg"
+tags:
+  - "Rust"
+  - "系统编程"
+  - "CLI"
+  - "内存管理"
+summary: "记录我从零开始学习 Rust 的过程，如何克服所有权和借用的概念障碍，并最终用 Rust 构建了一个实用的文件整理 CLI 工具。"
+publishedAt: "2024-05-01"
+featured: true
+outcome: "构建了一个功能完整的文件整理 CLI 工具"
+---
+
+## 为什么学习 Rust？
+
+作为前端开发者，Rust 对我来说是一个完全不同的世界。没有 GC、没有运行时、所有权系统——这些概念在学习初期都让我感到困惑。但我选择了面对挑战。
+
+### 学习路径
+
+1. **《The Rust Programming Language》** —— 官方书籍，最好的入门资源
+2. **Rustlings** —— 小型练习题，巩固基础语法
+3. **《Rust by Example》** —— 通过示例理解实际用法
+
+### 最大的挑战：所有权与借用
+
+所有权的概念花了我将近一周时间去真正理解。当你习惯了 JavaScript 的引用和垃圾回收，突然要手动管理生命周期和借用检查——这种思维方式需要时间转变。
+
+### 最终项目
+
+我构建了一个 CLI 文件整理工具，它可以根据文件类型（扩展名）自动将文件分类到不同的文件夹。虽然功能简单，但包含了文件 I/O、错误处理、命令行参数解析等实际应用中常见的需求。
