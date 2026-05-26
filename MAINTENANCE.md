@@ -340,14 +340,14 @@ ctaSecondary:
 
 **电子邮箱：**
 ```tsx
-<Button variant="secondary" href="mailto:你的邮箱@example.com" external>
+<Button variant="secondary" href="mailto:3260089513@qq.com" external>
   你的邮箱@example.com
 </Button>
 ```
 
 **GitHub 链接：**
 ```tsx
-<Button variant="secondary" href="https://github.com/你的用户名" external>
+<Button variant="secondary" href="https://github.com/g3260089513" external>
   @你的用户名
 </Button>
 ```

@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Tag } from "@/components/ui/Tag";
+import { Badge } from "@/components/ui/Badge";
 import { Rating } from "@/components/ui/Rating";
 import { MdxWrapper } from "@/components/mdx/MdxWrapper";
 import { getReviewBySlug, getAllReviews } from "@/lib/content/game-reviews";
@@ -42,6 +43,12 @@ export default async function GameReviewDetailPage({ params }: Props) {
               <span className="text-gold-400 font-mono text-xs tracking-widest uppercase">
                 游戏测评
               </span>
+              {review.status === "maintained" && (
+                <Badge variant="gold">持续更新</Badge>
+              )}
+              {review.status === "ongoing" && (
+                <Badge variant="green">游玩中</Badge>
+              )}
             </div>
 
             <h1 className="font-heading text-display font-bold text-text-primary mb-4">

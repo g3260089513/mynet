@@ -9,6 +9,7 @@ export interface HomeHero {
   name: string;
   roles: string[];
   tagline: string;
+  maskImage: string;
   ctaPrimary: {
     label: string;
     href: string;
@@ -31,6 +32,7 @@ export function getHomeHero(): HomeHero | null {
     name: data.name ?? "",
     roles: data.roles ?? [],
     tagline: data.tagline ?? "",
+    maskImage: data.maskImage ?? "",
     ctaPrimary: data.ctaPrimary ?? { label: "", href: "" },
     ctaSecondary: data.ctaSecondary ?? { label: "", href: "" },
     content,

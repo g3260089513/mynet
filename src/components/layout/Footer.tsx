@@ -10,7 +10,7 @@ export function Footer() {
               href="/"
               className="font-heading text-lg font-bold gold-gradient-text tracking-wide"
             >
-              LARA
+              MYhao
             </Link>
             <p className="mt-2 text-text-muted text-sm max-w-xs">
               游戏玩家 · 开发者 · 终身学习者
@@ -43,7 +43,7 @@ export function Footer() {
             </h3>
             <div className="flex flex-col gap-2">
               <a
-                href="https://github.com/lara"
+                href="https://github.com/g3260089513"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-text-secondary hover:text-gold-400 transition-colors"
@@ -51,7 +51,7 @@ export function Footer() {
                 GitHub
               </a>
               <a
-                href="mailto:lara@example.com"
+                href="mailto:3260089513@qq.com"
                 className="text-sm text-text-secondary hover:text-gold-400 transition-colors"
               >
                 Email
@@ -61,7 +61,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-border-subtle text-center text-text-muted text-xs">
-          &copy; {new Date().getFullYear()} Lara. All rights reserved.
+          &copy; {new Date().getFullYear()} MYhao. All rights reserved.
         </div>
       </div>
     </footer>

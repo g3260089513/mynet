@@ -1,4 +1,4 @@
-# Lara's Portfolio — 个人生涯展示博客
+# MYhao's Portfolio — 个人生涯展示博客
 
 基于 Next.js 构建的个人博客，涵盖**个人简介、游戏测评、作品展示、学习笔记、职业历程**五大板块。采用暗色奢华（Dark Luxury）视觉风格，所有内容通过 Markdown/MDX 文件管理，模块化设计，方便日常维护。
 

@@ -31,7 +31,7 @@ export function Header() {
           href="/"
           className="font-heading text-xl font-bold gold-gradient-text tracking-wide"
         >
-          LARA
+          MYhao
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

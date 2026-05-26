@@ -1,11 +1,11 @@
 export const siteConfig = {
-  name: "Lara's Portfolio",
+  name: "MYhao's Portfolio",
   description: "个人游戏测评、作品展示与学习记录",
-  url: "https://lara.dev",
+  url: "https://MYhao.dev",
   defaultOGImage: "/images/og-default.png",
   social: {
-    github: "https://github.com/lara",
-    email: "lara@example.com",
+    github: "https://github.com/MYhao",
+    email: "MYhao@example.com",
   },
   nav: {
     about: "关于我",

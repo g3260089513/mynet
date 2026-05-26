@@ -2,6 +2,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Tag } from "@/components/ui/Tag";
+import { Badge } from "@/components/ui/Badge";
 import { Rating } from "@/components/ui/Rating";
 import { getAllReviews, getAllGenres } from "@/lib/content/game-reviews";
 import { formatDate } from "@/lib/utils/date";
@@ -53,9 +54,17 @@ export default function GameReviewsPage() {
                 <div className="p-6 flex flex-col h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="font-heading text-lg font-bold text-text-primary">
-                        {review.gameName}
-                      </h3>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-heading text-lg font-bold text-text-primary">
+                          {review.gameName}
+                        </h3>
+                        {review.status === "maintained" && (
+                          <Badge variant="gold">持续更新</Badge>
+                        )}
+                        {review.status === "ongoing" && (
+                          <Badge variant="green">游玩中</Badge>
+                        )}
+                      </div>
                       <p className="text-text-muted text-sm">
                         {review.developer} · {review.releaseYear}
                       </p>

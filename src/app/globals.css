@@ -174,7 +174,7 @@
     inset: 0;
     z-index: 50;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.00;
     background-image: url("/textures/grain.svg");
     background-repeat: repeat;
     animation: grain 8s steps(10) infinite;

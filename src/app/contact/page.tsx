@@ -30,8 +30,8 @@ export default function ContactPage() {
               <p className="text-text-muted text-sm mb-4">
                 我会尽快回复您的邮件
               </p>
-              <Button variant="secondary" href="mailto:lara@example.com" external>
-                lara@example.com
+              <Button variant="secondary" href="mailto:3260089513@qq.com" external>
+                3260089513@qq.com
               </Button>
             </GlassCard>
           </ScrollReveal>
@@ -45,8 +45,8 @@ export default function ContactPage() {
               <p className="text-text-muted text-sm mb-4">
                 查看我的开源项目和代码
               </p>
-              <Button variant="secondary" href="https://github.com/lara" external>
-                @lara
+              <Button variant="secondary" href="https://github.com/g3260089513" external>
+                @g3260089513
               </Button>
             </GlassCard>
           </ScrollReveal>

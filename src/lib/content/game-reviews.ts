@@ -20,6 +20,7 @@ export interface GameReview {
   updatedAt?: string;
   featured: boolean;
   draft: boolean;
+  status: string;
   content: string;
 }
 
@@ -50,6 +51,7 @@ function readFiles(): GameReview[] {
         updatedAt: data.updatedAt,
         featured: data.featured ?? false,
         draft: data.draft ?? false,
+        status: data.status ?? "",
         content,
       };
     })

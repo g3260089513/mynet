@@ -93,6 +93,38 @@ export default async function PortfolioDetailPage({ params }: Props) {
           </header>
         </ScrollReveal>
 
+        {/* Image gallery */}
+        {project.images.length > 0 && (
+          <ScrollReveal delay={0.15}>
+            <div
+              className={`grid gap-4 mb-10 ${
+                project.images.length === 1
+                  ? "grid-cols-1"
+                  : project.images.length === 2
+                    ? "grid-cols-1 md:grid-cols-2"
+                    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              }`}
+            >
+              {project.images.map((src, i) => (
+                <div
+                  key={src}
+                  className={`overflow-hidden rounded-xl border border-border-subtle ${
+                    i === 0 && project.images.length >= 3
+                      ? "md:col-span-2 md:row-span-2"
+                      : ""
+                  }`}
+                >
+                  <img
+                    src={src}
+                    alt={`${project.title} 截图 ${i + 1}`}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
+
         <ScrollReveal delay={0.2}>
           <GlassCard variant="default" padding="lg" className="mb-section">
             <MdxWrapper source={project.content} />
