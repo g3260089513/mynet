@@ -92,3 +92,17 @@ Referenced in frontmatter as `/images/{section}/{slug}/cover.jpg`. Video at `pub
 - **Next.js 16**: App Router, React 19, Turbopack by default in dev. See `node_modules/next/dist/docs/` for framework docs.
 - **Static generation**: all routes use `generateStaticParams` for detail pages or are fully static. `MDXRemote` from `next-mdx-remote/rsc` runs at build time for SSG pages.
 - **Windows CRLF**: git warns about LF→CRLF conversion on Windows. Harmless, but be aware when reading files from bash tools on Windows.
+
+## Agent skills
+
+### Issue tracker
+
+Issues tracked as GitHub Issues on `g3260089513/PersonalWebPage`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Standard five-label vocabulary (needs-triage / needs-info / ready-for-agent / ready-for-human / wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at root. See `docs/agents/domain.md`.

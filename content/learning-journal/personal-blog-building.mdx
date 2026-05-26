@@ -1,0 +1,131 @@
+---
+title: "从零构建暗色奢华个人博客的全流程记录"
+tool: "Next.js + MDX + Vercel"
+category: "framework"
+difficulty: "intermediate"
+timeSpent: "持续迭代"
+coverImage: "/images/learning-journal/personal-blog/cover.jpg"
+tags:
+  - "Next.js"
+  - "Tailwind CSS"
+  - "MDX"
+  - "Vercel"
+  - "GitHub"
+  - "Claude Code"
+summary: "记录使用 Claude Code 从零构建个人生涯展示博客的完整过程，涵盖技术选型、架构设计、UI 定制、内容管理、部署运维和 Agent Skills 配置。"
+publishedAt: "2026-05-26"
+featured: true
+outcome: "完整的个人博客站点，已部署上线"
+---
+
+## 项目起源
+
+需要一个展示个人游戏测评、作品集、学习笔记的博客。核心需求：**模块化分类、方便修改内容、方便调整资源**。
+
+## 技术选型决策
+
+经过讨论确定了三个关键选择：
+
+- **框架**：Next.js 16 + React 19（App Router）—— 生态成熟、SSG 对 SEO 友好、Vercel 部署零成本
+- **内容管理**：Markdown/MDX 文件 + `gray-matter` 解析 frontmatter + `next-mdx-remote` 渲染 —— 文件即内容，不需要 CMS
+- **视觉风格**：暗色奢华（Dark Luxury）—— 金色点缀 + 毛玻璃卡片 + Playfair Display 衬线字体 + SVG 噪点纹理
+
+## 架构设计的关键决策
+
+### 内容管道
+
+每类内容（游戏测评、作品集、学习笔记等）独立一条管道：
+
+```
+content/{section}/*.mdx  →  src/lib/content/{section}.ts  →  src/app/{section}/page.tsx
+```
+
+Loader 用 `fs.readdirSync` + `gray-matter` 读文件、分离 frontmatter 和正文，返回类型安全的数组。新增文章只需要加 `.mdx` 文件，代码完全不用动。
+
+### Server/Client 的切割线
+
+一个容易踩坑的点：**把需要浏览器 API 的组件做成 Client Component，其余保持 Server Component**。
+
+| 层级 | 组件 |
+|------|------|
+| Server（默认） | 页面、布局、GlassCard、Tag、Rating、SectionHeading、Footer |
+| Client（`"use client"`） | Header（滚动检测）、ScrollReveal（IntersectionObserver）、MdxWrapper（MDXRemote 运行时）、AudioPlayer |
+
+framer-motion 只用在了页面过渡动画上，其余动画全用纯 CSS（`@keyframes` + IntersectionObserver），JS 体积很小。
+
+### Tailwind CSS v4 的坑
+
+Next.js 16 默认带的是 Tailwind v4，和 v3 最大的区别：**不再用 `tailwind.config.ts`，所有主题配置写在 `globals.css` 的 `@theme inline { ... }` 块里**。颜色、字体、动画、间距全部通过 CSS 自定义属性定义。
+
+## 内容模块的演变
+
+### 游戏测评状态徽章
+
+原始测评模板没有"运营状态"概念。对于《逆战：未来》这种持续更新的网游，需要标记"持续更新"；对于《艾尔登法环》这种已完成的单机游戏，标记"已完成"。于是在 loader 中增加了 `status` 字段，列表页和详情页通过 `Badge` 组件展示。
+
+### 作品详情页图片画廊
+
+最初的作品详情页只渲染了 MDX 正文，`images` 字段虽然定义在前端元数据里但从未被用到。补上了一个自适应网格画廊：1 张图全宽、2 张双列、3 张以上首图占大格。
+
+### 首页 Hero 遮罩效果
+
+首页名字最初是逐字动画显现。后来改为一个更有互动感的方案：金色渐变文字上面覆盖用户提供的图片遮罩，鼠标悬停时遮罩渐隐露出文字。本质是 `absolute` 定位的 `div` + `group-hover:opacity-0` 的 CSS transition。
+
+## 背景视频与 BGM
+
+两个独立组件：
+
+- **VideoBackground** — 全屏 `<video>`，`autoPlay loop muted`（浏览器要求 autoplay 必须静音），上面叠加 `bg-surface-deepest/70` 半透明层保证文字可读
+- **AudioPlayer** — 固定右下角圆形按钮，`<audio>` 元素循环播放 `public/audio/bgm.mp3`，点击切换播放/暂停，播放时显示声波动画、暂停时显示 X 标记
+
+资源路径：`public/videos/background.mp4`、`public/audio/bgm.mp3`。
+
+## 部署踩的坑
+
+### Vercel 权限问题
+
+遇到两个部署报错：
+
+1. **"commit author did not have contributing access"** —— 原因是 GitHub 仓库是私有的，Vercel Hobby 计划不支持私有仓库协作。解决：把仓库改为公开。
+
+2. **提交者显示为另一个账号** —— Vercel 部署页面显示的是项目创建者账号，不是 Git 提交者。确保用正确的 GitHub 账号登录 Vercel 创建项目。
+
+### Git 账号切换
+
+本地 Git 配置一直是旧账号 `2ann`，需要改成新 GitHub 账号 `MYhao`。做完之后所有新提交都带上正确作者。命令：
+
+```bash
+git config user.name "MYhao"
+git config user.email "g3260089513@gmail.com"
+```
+
+### 仓库迁移后 remote 更新
+
+GitHub 上把仓库从 `mynet` 重命名为 `PersonalWebPage`，本地 push 时收到迁移提示。更新 remote：
+
+```bash
+git remote set-url origin https://github.com/g3260089513/PersonalWebPage.git
+```
+
+Vercel 那边也需要重新连接新仓库地址。
+
+### 推送时 force push 被拒绝
+
+远端有一个空的 Initial commit，和本地历史不同。安全分类器阻止了 `--force`。最终通过 `git pull --rebase --allow-unrelated-histories` + 解决冲突后正常推送。
+
+## Matt Pocock Agent Skills
+
+安装了一组工程化 Agent 技能（`npx skills@latest add mattpocock/skills`），包含 14 个技能覆盖规划、执行、诊断、辅助四类场景。安装后需要跑 `/setup-matt-pocock-skills` 初始化配置（Issue 追踪器、标签词汇、文档布局）。本项目中手动完成了初始化，生成了 `docs/agents/` 下的三个配置文件，并在 `CLAUDE.md` 末尾追加了 `## Agent skills` 块。
+
+在新项目中使用只需两步：
+
+1. `npx skills@latest add mattpocock/skills`
+2. 运行 `/setup-matt-pocock-skills` 回答问题即可
+
+## 关键经验
+
+1. **内容与代码分离是第一原则**。一旦 `content/` 目录稳定，后续新增文章完全不需要碰代码，大幅降低维护心智负担。
+2. **Tailwind v4 的 CSS 配置方式**需要适应。好在类名还是一样的，只是定义 token 的位置从 JS 移到了 CSS。
+3. **静态生成的站点最适合个人博客**。没有服务器成本、没有数据库、没有运行时依赖，build 完就是一堆 HTML，扔到任何 CDN 上都能跑。
+4. **Vercel + GitHub 的工作流最省心**：写好内容 → `git push` → 自动部署，完全没有运维操作。
+5. **Agent Skills 是可插拔的工具箱**，不需要全记住。碰到对应场景时用对应的即可（改不动 bug → `/diagnose`、要拆任务 → `/to-issues`）。
