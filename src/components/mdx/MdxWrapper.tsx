@@ -5,13 +5,23 @@ interface MdxWrapperProps {
   source: string;
 }
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w一-鿿\s-]/g, "")
+    .replace(/\s+/g, "-");
+}
+
 const components: MDXComponents = {
   h1: ({ children, ...props }) => (
     <h1 className="font-heading text-display font-bold text-text-primary mt-12 mb-6" {...props}>{children}</h1>
   ),
-  h2: ({ children, ...props }) => (
-    <h2 className="font-heading text-h2 font-bold text-text-primary mt-10 mb-4" {...props}>{children}</h2>
-  ),
+  h2: ({ children, ...props }) => {
+    const text = typeof children === "string" ? children : String(children ?? "");
+    return (
+      <h2 id={slugify(text)} className="font-heading text-h2 font-bold text-text-primary mt-10 mb-4 scroll-mt-24" {...props}>{children}</h2>
+    );
+  },
   h3: ({ children, ...props }) => (
     <h3 className="font-heading text-h3 font-bold text-text-primary mt-8 mb-3" {...props}>{children}</h3>
   ),

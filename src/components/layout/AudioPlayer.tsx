@@ -1,19 +1,23 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export function AudioPlayer() {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const playingRef = useRef(false);
+
+  const setPlayingState = useCallback((v: boolean) => {
+    playingRef.current = v;
+    setPlaying(v);
+  }, []);
 
   useEffect(() => {
-    // Attempt autoplay — most browsers block this,
-    // user will need to click the button to start
     const audio = audioRef.current;
     if (!audio) return;
 
     const tryPlay = () => {
-      audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      audio.play().then(() => setPlayingState(true)).catch(() => setPlayingState(false));
     };
 
     // Try on first user interaction with the page
@@ -23,8 +27,20 @@ export function AudioPlayer() {
     };
     document.addEventListener("click", handleInteraction, { once: true });
 
-    return () => document.removeEventListener("click", handleInteraction);
-  }, []);
+    // 页面切到后台时自动暂停，不自动恢复
+    const handleVisibility = () => {
+      if (document.hidden && audioRef.current && playingRef.current) {
+        audioRef.current.pause();
+        setPlayingState(false);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [setPlayingState]);
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -32,9 +48,9 @@ export function AudioPlayer() {
 
     if (playing) {
       audio.pause();
-      setPlaying(false);
+      setPlayingState(false);
     } else {
-      audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      audio.play().then(() => setPlayingState(true)).catch(() => setPlayingState(false));
     }
   };
 

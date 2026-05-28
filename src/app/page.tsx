@@ -1,10 +1,16 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { SectionNav } from "@/components/home/SectionNav";
-import { FeaturedGrid } from "@/components/home/FeaturedGrid";
+import { RecentUpdates } from "@/components/home/RecentUpdates";
 import { getHomeHero } from "@/lib/content/home";
 
-export default function HomePage() {
+interface Props {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function HomePage({ searchParams }: Props) {
   const hero = getHomeHero();
+  const { page } = await searchParams;
+  const pageNum = Math.max(1, parseInt(page ?? "1", 10) || 1);
 
   if (!hero) {
     return (
@@ -18,7 +24,7 @@ export default function HomePage() {
     <>
       <HeroSection hero={hero} />
       <SectionNav />
-      <FeaturedGrid />
+      <RecentUpdates page={pageNum} />
     </>
   );
 }

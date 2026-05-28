@@ -37,6 +37,15 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-section">
           <ScrollReveal className="lg:col-span-2">
             <GlassCard variant="default" padding="lg">
+              {about.avatar && (
+                <div className="mb-6">
+                  <img
+                    src={about.avatar}
+                    alt={about.name}
+                    className="w-24 h-24 rounded-full border-2 border-gold-400/30 object-cover"
+                  />
+                </div>
+              )}
               <h3 className="font-heading text-h3 font-bold text-text-primary mb-4">
                 {about.name}
               </h3>

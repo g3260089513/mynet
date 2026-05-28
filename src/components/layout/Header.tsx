@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils/cn";
 import { navigation } from "@/lib/constants/navigation";
 import { MobileMenu } from "./MobileMenu";
 
-export function Header() {
+export function Header({ avatar }: { avatar?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -27,12 +28,25 @@ export function Header() {
       )}
     >
       <div className="mx-auto max-w-7xl px-6 flex items-center justify-between h-16">
-        <Link
-          href="/"
-          className="font-heading text-xl font-bold gold-gradient-text tracking-wide"
-        >
-          MYhao
-        </Link>
+        <div className="flex items-center gap-3">
+          {avatar && (
+            <Link href="/about" className="shrink-0">
+              <Image
+                src={avatar}
+                alt="头像"
+                width={32}
+                height={32}
+                className="rounded-full border border-border-subtle hover:border-gold-400/50 transition-colors"
+              />
+            </Link>
+          )}
+          <Link
+            href="/"
+            className="font-heading text-xl font-bold gold-gradient-text tracking-wide"
+          >
+            MYhao
+          </Link>
+        </div>
 
         <nav className="hidden md:flex items-center gap-1">
           {navigation.map((item) => (

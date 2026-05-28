@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
 import { VideoBackground } from "@/components/layout/VideoBackground";
 import { AudioPlayer } from "@/components/layout/AudioPlayer";
+import { getAbout } from "@/lib/content/about";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -32,6 +33,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const about = getAbout();
+
   return (
     <html
       lang="zh-CN"
@@ -40,8 +43,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-body bg-surface-deepest text-text-primary">
         <VideoBackground />
         <GrainOverlay />
-        <Header />
-        <main className="flex-1">{children}</main>
+        <Header avatar={about?.avatar} />
+        <main className="flex-1 relative z-10">{children}</main>
         <Footer />
         <AudioPlayer />
       </body>
